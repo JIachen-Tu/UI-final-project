@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ lesson.title }}</h1>
+    <div class="embed-responsive embed-responsive-16by9 my-4">
+        <video controls class="embed-responsive-item"><source src="{{ lesson.media }}" type="video/mp4"></video>
+    </div>
+    <p class="lead">{{ lesson.text }}</p>
+    
+    <button id="next-btn" class="btn btn-primary">Next</button>
+
+    <script>
+        $("#next-btn").click(function() {
+            let next = "{{ lesson.next_lesson }}";
+            window.location.href = (next === "quiz") ? "/quiz/1" : "/learn/" + next;
+        });
+    </script>
+{% endblock %}
