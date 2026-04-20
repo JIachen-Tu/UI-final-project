@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="score-display">
+        <h1 class="mb-4">Quiz Completed!</h1>
+        
+        <div class="my-5">
+            <p class="lead">Your Final Score:</p>
+            <div class="score-number">{{ score }} / {{ total }}</div>
+        </div>
+
+        <div class="result-message mb-5">
+            {% if score == total %}
+                <div class="alert alert-success">
+                    <h4>Perfect! You're a Carving Pro!</h4>
+                    <p>You clearly understand the importance of edge control.</p>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <h4>Good Job!</h4>
+                    <p>Consider reviewing the difference between sliding and cutting into the snow.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <a href="/" class="btn btn-outline-secondary btn-lg mr-3">Back to Home</a>
+            <a href="/quiz/1" class="btn btn-primary btn-lg">Retake Quiz</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
