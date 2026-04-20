@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="start-container">
+        <h1 class="display-4">Snowboarding Masterclass</h1>
+        <p class="lead">Learn the fundamental difference between Carving and Skidding to ride with more control.</p>
+        
+        <div class="my-5">
+            <a href="/learn/1" id="start-btn" class="btn btn-primary btn-start">
+                Start Learning
+            </a>
+        </div>
+
+        <div class="row text-center mt-5">
+            <div class="col-md-4">
+                <p><strong>Step 1</strong><br>Understand Skidding</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Step 2</strong><br>Master Carving</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Step 3</strong><br>Test Your Knowledge</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#start-btn").click(function() {
+            console.log("Learning session started");
+        });
+    });
+</script>
+{% endblock %}
