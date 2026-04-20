@@ -6,6 +6,6 @@
     </div>
     <p class="lead">{{ lesson.text }}</p>
     
-    <button id="next-btn" class="btn btn-primary" data-next="{{ lesson.next_lesson }}">Next</button>
+    <button id="next-btn" class="btn btn-primary" data-next="{{ lesson.next_lesson }}" data-lesson-id="{{ lesson.lesson_id }}">Next</button>
     <script src="{{ url_for('static', filename='js/learn.js') }}"></script>
 {% endblock %}

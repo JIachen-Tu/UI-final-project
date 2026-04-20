@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, jsonify, abort
 import os
+import time
 
 app = Flask(__name__)
 
-user_data = {"score": 0, "results": []}
+user_data = {"score": 0, "results": {}, "learn_enter_time": {}, "learn_stay_time": {}}
 
 learning_content = {
     "1": {
@@ -59,6 +60,8 @@ quiz_content = {
     "5": {"id": "5", "q": "How can you tell someone is carving by tracks?", "options": ["Wide messy tracks", "Thin clean tracks"], "a": "Thin clean tracks", "next": "results"}
 }
 
+
+
 @app.route('/')
 def home():
     user_data["score"] = 0 
@@ -69,14 +72,37 @@ def learn(id):
     content = learning_content.get(id)
     if content is None:
         abort(404)
+    
+    lesson_id = int(id)
+    user_data["learn_enter_time"][lesson_id] = time.time()
+    if lesson_id != 1:
+        user_data["learn_stay_time"][lesson_id - 1] = user_data["learn_enter_time"][lesson_id] - user_data["learn_enter_time"][lesson_id - 1]
 
     lesson = {
         "title": content.get("title", ""),
+        "lesson_id": lesson_id,
         "media": content.get("media_url", ""),
         "text": " ".join(content.get("points", [])),
         "next_lesson": "quiz" if str(content.get("next", "")).startswith("quiz") else content.get("next", "")
     }
+    
+    
     return render_template('learn.html', lesson=lesson)
+
+@app.route('/learn/last_page', methods=["POST"])
+def learn_last_page():
+    req = request.get_json()
+    
+    lesson_id = req.get("id")
+    
+    if lesson_id is None:
+        return jsonify(success=False, error="Missing lesson id"), 400
+
+    lesson_id = int(lesson_id)
+    user_data["learn_stay_time"][lesson_id] = time.time() - user_data["learn_enter_time"][lesson_id]
+    
+    return jsonify(success=True)
+
 
 @app.route('/quiz/<id>')
 def quiz(id):
@@ -103,6 +129,8 @@ def record_answer():
 
     if user_answer == quiz_content[quiz_id]['a']:
         user_data["score"] += 1
+    user_data["results"][quiz_id] = user_answer
+    
     return jsonify(success=True)
 
 @app.route('/record', methods=['POST'])
