@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort
 import os
 
 app = Flask(__name__)
@@ -66,22 +66,52 @@ def home():
 
 @app.route('/learn/<id>')
 def learn(id):
-    return render_template('learn.html', data=learning_content[id])
+    content = learning_content.get(id)
+    if content is None:
+        abort(404)
+
+    lesson = {
+        "title": content.get("title", ""),
+        "media": content.get("media_url", ""),
+        "text": " ".join(content.get("points", [])),
+        "next_lesson": "quiz" if str(content.get("next", "")).startswith("quiz") else content.get("next", "")
+    }
+    return render_template('learn.html', lesson=lesson)
 
 @app.route('/quiz/<id>')
 def quiz(id):
-    return render_template('quiz.html', data=quiz_content[id])
+    content = quiz_content.get(id)
+    if content is None:
+        abort(404)
 
-@app.route('/record', methods=['POST'])
-def record():
+    question = {
+        "quiz_id": content.get("id", id),
+        "question": content.get("q", ""),
+        "options": content.get("options", []),
+        "next_question": "end" if content.get("next") == "results" else content.get("next", "end")
+    }
+    return render_template('quiz.html', question=question)
+
+@app.route('/record_answer', methods=['POST'])
+def record_answer():
     req = request.get_json()
-    if req['user_answer'] == quiz_content[req['id']]['a']:
+    quiz_id = req.get('quiz_id')
+    user_answer = req.get('user_answer')
+
+    if not quiz_id or quiz_id not in quiz_content:
+        return jsonify(success=False, error="Invalid quiz_id"), 400
+
+    if user_answer == quiz_content[quiz_id]['a']:
         user_data["score"] += 1
     return jsonify(success=True)
 
+@app.route('/record', methods=['POST'])
+def record():
+    return record_answer()
+
 @app.route('/results')
 def results():
-    return render_template('results.html', score=user_data["score"])
+    return render_template('results.html', score=user_data["score"], total=len(quiz_content))
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))

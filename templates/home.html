@@ -25,12 +25,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $("#start-btn").click(function() {
-            console.log("Learning session started");
-        });
-    });
-</script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}

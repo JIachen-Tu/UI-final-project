@@ -6,12 +6,6 @@
     </div>
     <p class="lead">{{ lesson.text }}</p>
     
-    <button id="next-btn" class="btn btn-primary">Next</button>
-
-    <script>
-        $("#next-btn").click(function() {
-            let next = "{{ lesson.next_lesson }}";
-            window.location.href = (next === "quiz") ? "/quiz/1" : "/learn/" + next;
-        });
-    </script>
+    <button id="next-btn" class="btn btn-primary" data-next="{{ lesson.next_lesson }}">Next</button>
+    <script src="{{ url_for('static', filename='js/learn.js') }}"></script>
 {% endblock %}
