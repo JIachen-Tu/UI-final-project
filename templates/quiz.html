@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3>Question {{ question.quiz_id }}: {{ question.question }}</h3>
+    <div class="list-group my-4">
+        {% for option in question.options %}
+            <button class="list-group-item list-group-item-action option-btn">{{ option }}</button>
+        {% endfor %}
+    </div>
+
+    <script>
+        $(".option-btn").click(function() {
+            let userAnswer = $(this).text();
+            $.ajax({
+                type: "POST",
+                url: "/record_answer",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                data : JSON.stringify({"quiz_id": "{{ question.quiz_id }}", "user_answer": userAnswer}),
+                success: function(result) {
+                    let next = "{{ question.next_question }}";
+                    window.location.href = (next === "end") ? "/results" : "/quiz/" + next;
+                }
+            });
+        });
+    </script>
+{% endblock %}
