@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, abort
+from flask import Flask, render_template, request, jsonify, abort, redirect, url_for
 import os
 import time
 
@@ -10,43 +10,64 @@ learning_content = {
     "1": {
         "id": "1",
         "title": "Why does turning feel hard?",
-        "media_type": "text",
-        "points": ["Many beginners lose control when turning", "Turns feel too fast, slippery, and hard to stop"],
+        "media_type": "video",
+        "media_url": "/static/videos/snowboarding.mp4",
+        "points": [
+            "Many beginners lose control when turning",
+            "Turns feel too fast, slippery, and hard to stop"
+        ],
         "hint": "Let's fix that by understanding two key techniques.",
         "next": "2"
     },
     "2": {
         "id": "2",
         "title": "What is Skidding?",
-        "media_type": "image",
-        "media_url": "/static/images/skidding_demo.jpg", 
-        "points": ["Board slides sideways", "Less grip on snow", "Easier for beginners", "Less stable at high speed"],
+        "media_type": "video",
+        "media_url": "/static/videos/snowboarding.mp4",
+        "points": [
+            "Board slides sideways",
+            "Less grip on snow",
+            "Easier for beginners",
+            "Less stable at high speed"
+        ],
         "next": "3"
     },
     "3": {
         "id": "3",
         "title": "What is Carving?",
-        "media_type": "image",
-        "media_url": "/static/images/carving_demo.jpg", 
-        "points": ["Board edge cuts into snow", "Smooth curved motion", "More control at speed", "Clean and efficient"],
+        "media_type": "video",
+        "media_url": "/static/videos/snowboarding.mp4",
+        "points": [
+            "Board edge cuts into snow",
+            "Smooth curved motion",
+            "More control at speed",
+            "Clean and efficient"
+        ],
         "next": "4"
     },
     "4": {
         "id": "4",
         "title": "Snow Tracks: The Visual Cue",
-        "media_type": "text",
-        "points": ["Skidding -> messy, wide tracks", "Carving -> thin, clean lines"],
-        "hint": "Looking at tracks is the best way to tell which is which!", 
+        "media_type": "video",
+        "media_url": "/static/videos/snowboarding.mp4",
+        "points": [
+            "Skidding -> messy, wide tracks",
+            "Carving -> thin, clean lines"
+        ],
+        "hint": "Looking at tracks is the best way to tell which is which!",
         "next": "5"
     },
     "5": {
         "id": "5",
         "title": "Scenario: Losing Control!",
-        "media_type": "text",
-        "points": ["Scenario: You are riding down a steep slope, speed is increasing, and you feel out of control."],
+        "media_type": "video",
+        "media_url": "/static/videos/snowboarding.mp4",
+        "points": [
+            "Scenario: You are riding down a steep slope, speed is increasing, and you feel out of control."
+        ],
         "question": "What should you use?",
         "options": ["A. Skidding", "B. Carving"],
-        "answer": "A. Skidding", 
+        "answer": "A. Skidding",
         "feedback": "Correct! Skidding increases friction to help you slow down.",
         "next": "quiz/1"
     }
@@ -64,7 +85,10 @@ quiz_content = {
 
 @app.route('/')
 def home():
-    user_data["score"] = 0 
+    user_data["score"] = 0
+    user_data["results"] = {}
+    user_data["learn_enter_time"] = {}
+    user_data["learn_stay_time"] = {}
     return render_template('home.html')
 
 @app.route('/learn/<id>')
@@ -136,6 +160,12 @@ def record_answer():
 @app.route('/record', methods=['POST'])
 def record():
     return record_answer()
+
+@app.route('/retake')
+def retake():
+    user_data["score"] = 0
+    user_data["results"] = {}
+    return redirect(url_for('quiz', id='1'))
 
 @app.route('/results')
 def results():
