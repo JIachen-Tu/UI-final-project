@@ -1,32 +1,32 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div class="container">
+<div class="container text-center">
     <div class="score-display">
-        <h1 class="mb-4">Quiz Completed!</h1>
+        <h1>Quiz Completed!</h1>
+        <p class="lead">Great effort on the slopes today!</p>
         
         <div class="my-5">
-            <p class="lead">Your Final Score:</p>
-            <div class="score-number">{{ score }} / {{ total }}</div>
+            <div class="score-number">{{ score }}</div>
+            <p class="text-muted">Total Correct out of {{ total }}</p>
         </div>
 
         <div class="result-message mb-5">
             {% if score == total %}
-                <div class="alert alert-success">
-                    <h4>Perfect! You're a Carving Pro!</h4>
-                    <p>You clearly understand the importance of edge control.</p>
+                <div class="alert alert-success" style="border-radius: 12px; border: none; background-color: #d4edda;">
+                    <h4 style="font-family: 'Montserrat';">Pro Snowboarder!</h4>
+                    <p>You have mastered the visual cues of carving and skidding.</p>
                 </div>
             {% else %}
-                <div class="alert alert-warning">
-                    <h4>Good Job!</h4>
-                    <p>Consider reviewing the difference between sliding and cutting into the snow.</p>
+                <div class="alert alert-light" style="border-radius: 12px; border: 2px solid #E9ECEF;">
+                    <h4 style="font-family: 'Montserrat';">Good Progress!</h4>
+                    <p>A little more practice on edge control and you'll be carving thin lines in no time.</p>
                 </div>
             {% endif %}
         </div>
 
-        <div class="d-flex justify-content-center">
-            <a href="/" class="btn btn-outline-secondary btn-lg mr-3">Back to Home</a>
-            <a href="{{ url_for('retake') }}" class="btn btn-primary btn-lg">Retake Quiz</a>
+        <div class="d-flex justify-content-center mt-4">
+            <a href="/" class="btn btn-outline-secondary btn-lg mr-3" style="border-radius: 30px; padding: 12px 30px;">Home</a>
+            <a href="/quiz/1" class="btn btn-primary btn-lg btn-start" style="padding: 12px 40px; font-size: 1.1rem;">Retake Quiz</a>
         </div>
     </div>
 </div>
