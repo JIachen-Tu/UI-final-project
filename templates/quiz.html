@@ -1,12 +1,53 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div id="quiz-container" data-quiz-id="{{ question.quiz_id }}" data-next-question="{{ question.next_question }}">
-    <h3>Question {{ question.quiz_id }}: {{ question.question }}</h3>
+<div class="container">
+    <div class="progress-wrap">
+        <div class="progress-label">Question {{ question.quiz_id }} of 5</div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{ (question.quiz_id|int / 5) * 100 }}%;"></div>
+        </div>
+    </div>
+
+    <h3 class="quiz-question">{{ question.question }}</h3>
+
+    {% if question.media %}
+    <div class="media-container">
+        <img src="{{ question.media }}" alt="Quiz Image" class="img-fluid">
+    </div>
+    {% endif %}
+
     <div class="list-group my-4">
         {% for option in question.options %}
             <button class="list-group-item list-group-item-action option-btn">{{ option }}</button>
         {% endfor %}
     </div>
+
+    <div class="clearfix">
+        <button id="next-btn" class="btn" style="display:none;">Next Question →</button>
     </div>
-    <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+</div>
+
+<script>
+    $(".option-btn").click(function() {
+        $(".option-btn").removeClass("active").css("border-color", "#E9ECEF");
+        $(this).css("border-color", "#FB8500");
+        
+        let userAnswer = $(this).text();
+        $("#next-btn").fadeIn();
+
+        $("#next-btn").off("click").click(function() {
+            $.ajax({
+                type: "POST",
+                url: "/record_answer",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                data : JSON.stringify({"quiz_id": "{{ question.quiz_id }}", "user_answer": userAnswer}),
+                success: function(result) {
+                    let next = "{{ question.next_question }}";
+                    window.location.href = (next === "end") ? "/results" : "/quiz/" + next;
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
