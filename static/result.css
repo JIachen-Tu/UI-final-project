@@ -119,3 +119,23 @@
     color: #ffffff;
     text-decoration: none;
 }
+
+.result-bg {
+    background-image: url("/static/data/quiz_complete_background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.score-card {
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid #e0e8f5;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+}
