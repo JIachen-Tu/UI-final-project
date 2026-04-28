@@ -2,30 +2,32 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
 
-<div class="container quiz-wrapper">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="content-card text-center py-5">
-                <span class="quiz-step-text">Quiz Complete</span>
-                <h1 class="step-title mt-2 mb-3" style="font-size: 2.5rem;">Quiz Completed!</h1>
-                <p class="step-desc mx-auto" style="max-width: 500px;">Nice work! You've taken another step toward becoming a more confident, skilled rider.</p>
+<div class="results-page-body">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="content-card text-center">
+                    <span class="quiz-step-text">QUIZ COMPLETE</span>
+                    <h1 class="step-title mt-2 mb-3" style="font-size: 2.8rem;">Quiz Completed!</h1>
+                    <p class="step-desc">Nice work! You've taken another step toward becoming a more confident, skilled rider.</p>
 
-                <div class="score-circle">
-                    <span class="score-label">Final Score</span>
-                    <span class="score-value">{{ score }}/5</span>
-                </div>
+                    <div class="score-circle">
+                        <span class="score-label">Your Final Score</span>
+                        <span class="score-value">{{ score }}/5</span>
+                    </div>
 
-                <div class="result-status mb-5">
-                    {% if score >= 4 %}
-                        <h4 class="step-title text-success">Good Job!</h4>
-                    {% else %}
-                        <h4 class="step-title text-warning">Keep Practicing!</h4>
-                    {% endif %}
-                </div>
+                    <div class="mb-5">
+                        {% if score >= 4 %}
+                            <h4 class="step-title text-success">Good Job!</h4>
+                        {% else %}
+                            <h4 class="step-title text-warning">Keep Practicing!</h4>
+                        {% endif %}
+                    </div>
 
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="/" class="btn btn-light px-4 mr-3" style="border-radius: 8px; font-weight: 700;">Back to Home</a>
-                    <a href="/quiz/1" class="btn btn-submit mt-0 px-4">Retake Quiz</a>
+                    <div class="d-flex justify-content-center">
+                        <a href="/" class="btn btn-light px-4 mr-3" style="border-radius: 8px; font-weight: 700; border: 1px solid #e2e8f0;">Back to Home</a>
+                        <a href="/quiz/1" class="btn btn-submit mt-0 px-4">Retake Quiz</a>
+                    </div>
                 </div>
             </div>
         </div>
