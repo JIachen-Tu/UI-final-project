@@ -2,8 +2,9 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
 
-<div class="quiz-page-body">
+<div class="quiz-bg">
     <div class="container">
+        
         <div class="quiz-intro-section d-flex align-items-center">
             <div class="mr-4">
                 <span class="step-icon step-icon-quiz"></span>
@@ -19,19 +20,19 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 mb-4">
                 <div class="content-card">
                     <span class="quiz-step-text">Question {{ question.quiz_id }}</span>
                     <h2 class="step-title mb-4">Question {{ question.quiz_id }}: {{ question.question }}</h2>
 
                     {% if question.media %}
                     <div class="media-container mb-4">
-                        <img src="{{ question.media }}" class="img-fluid rounded shadow-sm" style="width:100%;">
+                        <img src="{{ question.media }}" class="img-fluid rounded shadow-sm" style="width:100%; border: 1px solid #e7edf5;">
                     </div>
                     {% endif %}
 
                     <div class="option-container">
-                        {% set letters = ['A', 'B', 'C'] %}
+                        {% set letters = ['A', 'B', 'C', 'D'] %}
                         {% for option in question.options %}
                         <button class="option-btn" data-val="{{ option }}">
                             <span class="option-label">{{ letters[loop.index0] }}</span>
@@ -48,11 +49,16 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="content-card">
+                <div class="content-card" style="border-top: 4px solid #1d6fff;">
                     <h5 class="tip-title">Choose the best answer</h5>
                     <p class="tip-desc">Think about what you've learned so far. You've got this!</p>
+                    
+                    <div class="mt-4 text-center">
+                        <img src="/static/data/snowboarder_withbg.png" alt="Snowboarder Hint" class="img-fluid rounded" style="max-height: 250px; width: 100%; object-fit: cover;">
+                    </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>
