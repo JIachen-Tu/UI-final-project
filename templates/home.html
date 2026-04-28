@@ -1,28 +1,103 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="start-container">
+<div class="home-bg">
+    <div class="container">
+        <!--<div class="start-container">
         <h1 class="display-4">Snowboarding Masterclass</h1>
         <p class="lead">Learn the fundamental difference between Carving and Skidding to ride with more control.</p>
-        
+        -->
+        <!--
         <div class="my-5">
             <a href="/learn/1" id="start-btn" class="btn btn-primary btn-start">
                 Start Learning
             </a>
+        </div>-->
+
+        <div class="start-container">
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h1 class="display-4">Snowboarding Masterclass</h1>
+                    <p class="lead">Learn the fundamental difference between Carving and Skidding to ride with more
+                        control.</p>
+
+
+                    <a href="/learn/1" id="start-btn" class="btn btn-primary btn-start">
+                        Start Learning
+                    </a>
+                </div>
+
+                <div class="col-md-6">
+                    <img src="{{ url_for('static', filename='data/snowboarder_withbg.png') }}" alt="snowboarder" ,
+                        class="img-fluid snowboarder_bg">
+                </div>
+            </div>
+
         </div>
 
-        <div class="row text-center mt-5">
-            <div class="col-md-4">
-                <p><strong>Step 1</strong><br>Understand Skidding</p>
+
+
+        <div class="row align-items-center mt-5">
+            <div class="col">
+                <div class="card step-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-icon step-icon-skidding mr-3"></span>
+                            <div>
+                                <div class="step-label">STEP 1</div>
+                                <h5 class="step-title mb-0">Understand Skidding</h5>
+                            </div>
+                        </div>
+                        <p class="step-desc">Learn how skidding works and when to use it to control your speed.</p>
+                        <span class="step-tag">&#128218; Foundations</span>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <p><strong>Step 2</strong><br>Master Carving</p>
+
+            <div class="col-auto step-arrow-col">
+                <div class="step-arrow-line"></div>
+                <div class="step-arrow-circle">&#8250;</div>
             </div>
-            <div class="col-md-4">
-                <p><strong>Step 3</strong><br>Test Your Knowledge</p>
+
+            <div class="col">
+                <div class="card step-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-icon step-icon-carving mr-3"></span>
+                            <div>
+                                <div class="step-label">STEP 2</div>
+                                <h5 class="step-title mb-0">Master Carving</h5>
+                            </div>
+                        </div>
+                        <p class="step-desc">Discover carving techniques for smooth, efficient turns on any terrain.</p>
+                        <span class="step-tag">&#11088; Core Skill</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-auto step-arrow-col">
+                <div class="step-arrow-line"></div>
+                <div class="step-arrow-circle">&#8250;</div>
+            </div>
+
+            <div class="col">
+                <div class="card step-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-icon step-icon-quiz mr-3"></span>
+                            <div>
+                                <div class="step-label">STEP 3</div>
+                                <h5 class="step-title mb-0">Test Your Knowledge</h5>
+                            </div>
+                        </div>
+                        <p class="step-desc">Take a quick quiz to reinforce what you've learned and track your progress.</p>
+                        <span class="step-tag">&#10003; Assessment</span>
+                    </div>
+                </div>
             </div>
         </div>
+
+
     </div>
 </div>
 <script src="{{ url_for('static', filename='js/home.js') }}"></script>

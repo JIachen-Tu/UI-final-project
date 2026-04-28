@@ -1,0 +1,41 @@
+.mountain-icon,
+.user-icon,
+.step-icon {
+    display: inline-block;
+    background-image: url("/static/data/icons.png");
+    background-repeat: no-repeat;
+    background-size: 160px 160px;
+    flex-shrink: 0;
+}
+
+.mountain-icon {
+    width: 40px;
+    height: 24px;
+    background-position: -4px -30px;
+    position: relative;
+    top: -5px;
+}
+
+.user-icon {
+    width: 24px;
+    height: 24px;
+    background-position: -55px -29px;
+}
+
+/* Step icons — bottom row of icons.png sprite */
+.step-icon {
+    width: 52px;
+    height: 76px;
+}
+
+.step-icon-skidding {
+    background-position: 0px -72px;
+}
+
+.step-icon-carving {
+    background-position: -54px -72px;
+}
+
+.step-icon-quiz {
+    background-position: -108px -72px;
+}

@@ -1,0 +1,77 @@
+.home-bg {
+    background-image: url("/static/data/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.snowboarder_bg {
+    border-radius: 20px;
+}
+
+/* Step cards */
+.step-card {
+    border: 1px solid #e7edf5;
+    border-radius: 0.75em;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+}
+
+.step-label {
+    font-size: 0.7em;
+    font-weight: 700;
+    color: #1d6fff;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2em;
+}
+
+.step-title {
+    font-size: 1em;
+    font-weight: 700;
+    color: #172033;
+}
+
+.step-desc {
+    font-size: 0.875em;
+    color: #5a6a85;
+    margin-bottom: 1em;
+}
+
+.step-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8em;
+    color: #1d6fff;
+    background: #eef3ff;
+    border-radius: 2em;
+    padding: 0.25em 0.75em;
+}
+
+/* Arrow between cards */
+.step-arrow-col {
+    display: flex;
+    align-items: center;
+    padding: 0 0.25em;
+}
+
+.step-arrow-line {
+    width: 1.5em;
+    border-top: 2px dashed #b0c0d8;
+}
+
+.step-arrow-circle {
+    width: 1.75em;
+    height: 1.75em;
+    border-radius: 50%;
+    background: #eef3ff;
+    color: #1d6fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 1;
+}
