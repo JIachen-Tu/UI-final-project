@@ -1,52 +1,63 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container">
-    <div class="progress-wrap">
-        <div class="progress-label">Question {{ question.quiz_id }} of 5</div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: {{ (question.quiz_id|int / 5) * 100 }}%;"></div>
+<link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+
+<div class="container quiz-wrapper">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="content-card">
+                <span class="quiz-step-text">Quiz {{ question.quiz_id }} of 5</span>
+                <h2 class="step-title mb-4" style="font-size: 1.75rem;">{{ question.question }}</h2>
+
+                {% if question.media %}
+                <div class="media-container mb-4" style="background: none;">
+                    <img src="{{ question.media }}" class="img-fluid rounded" style="width:100%; height: auto;">
+                </div>
+                {% endif %}
+
+                <div class="option-container">
+                    {% set letters = ['A', 'B', 'C'] %}
+                    {% for option in question.options %}
+                    <button class="option-btn" data-val="{{ option }}">
+                        <span class="option-label">{{ letters[loop.index0] }}</span>
+                        <span class="option-text">{{ option }}</span>
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <button id="submit-btn" class="btn btn-submit" style="display:none;">Submit Answer</button>
+            </div>
         </div>
-    </div>
 
-    <h3 class="quiz-question">{{ question.question }}</h3>
-
-    {% if question.media %}
-    <div class="media-container">
-        <img src="{{ question.media }}" alt="Quiz Image" class="img-fluid">
-    </div>
-    {% endif %}
-
-    <div class="list-group my-4">
-        {% for option in question.options %}
-            <button class="list-group-item list-group-item-action option-btn">{{ option }}</button>
-        {% endfor %}
-    </div>
-
-    <div class="clearfix">
-        <button id="next-btn" class="btn" style="display:none;">Next Question →</button>
+        <div class="col-lg-4">
+            <div class="content-card" style="border-left: 4px solid var(--brand-blue);">
+                <h5 class="tip-title">Choose the best answer</h5>
+                <p class="tip-desc">Think about what you've learned so far about edge control versus sliding. You've got this!</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
+    let selected = "";
     $(".option-btn").click(function() {
-        $(".option-btn").removeClass("active").css("border-color", "#E9ECEF");
-        $(this).css("border-color", "#FB8500");
-        
-        let userAnswer = $(this).text();
-        $("#next-btn").fadeIn();
+        $(".option-btn").removeClass("active");
+        $(this).addClass("active");
+        selected = $(this).data("val");
+        $("#submit-btn").fadeIn(200);
+    });
 
-        $("#next-btn").off("click").click(function() {
-            $.ajax({
-                type: "POST",
-                url: "/record_answer",
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                data : JSON.stringify({"quiz_id": "{{ question.quiz_id }}", "user_answer": userAnswer}),
-                success: function(result) {
-                    let next = "{{ question.next_question }}";
-                    window.location.href = (next === "end") ? "/results" : "/quiz/" + next;
-                }
-            });
+    $("#submit-btn").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "/record_answer",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({"quiz_id": "{{ question.quiz_id }}", "user_answer": selected}),
+            success: function(res) {
+                let next = "{{ question.next_question }}";
+                window.location.href = (next === "end") ? "/results" : "/quiz/" + next;
+            }
         });
     });
 </script>
