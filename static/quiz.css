@@ -22,6 +22,64 @@ body {
     padding: 32px;
 }
 
+
+.quiz-page-body {
+    background-image: url("/static/data/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.quiz-intro-section {
+    padding: 60px 0 40px;
+    text-align: left;
+}
+
+.quiz-intro-section h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: #172033;
+}
+
+.quiz-intro-section p {
+    color: #5a6a85;
+    font-size: 1.1rem;
+}
+
+.quiz-progress-container {
+    background: #e2e8f0;
+    height: 8px;
+    border-radius: 4px;
+    margin: 20px 0 40px;
+    overflow: hidden;
+}
+
+.quiz-progress-fill {
+    background-color: #1d6fff;
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.results-page-body {
+    background-image: url("/static/data/quiz_complete_background.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.content-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(231, 237, 245, 0.8);
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+    padding: 40px;
+}
+
 .quiz-step-text {
     font-size: 0.85rem;
     font-weight: 700;
