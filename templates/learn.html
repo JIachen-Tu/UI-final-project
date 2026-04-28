@@ -1,14 +1,100 @@
 {% extends "layout.html" %}
-{% block content %}
-    <h1>{{ lesson.title }}</h1>
-    <div class="my-4 d-flex justify-content-center">
-        <video controls style="max-width: 700px; max-height: 500px; width: auto; height: auto;">
-            <source src="{{ lesson.media }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <p class="lead">{{ lesson.text }}</p>
 
-    <button id="next-btn" class="btn btn-primary" data-next="{{ lesson.next_lesson }}" data-lesson-id="{{ lesson.lesson_id }}">Next</button>
-    <script src="{{ url_for('static', filename='js/learn.js') }}"></script>
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='learn.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='icons.css') }}">
+<main class="learning-page">
+
+    <a href="{{ url_for('home') }}" class="back-link">← Back to Learn</a>
+
+    <section class="learning-grid">
+
+        <div class="learning-left">
+
+            <div class="step-pill">
+                <span>STEP {{ lesson.lesson_id }} OF 5</span>
+                <span>→</span>
+                <span>{{ lesson.title }}</span>
+            </div>
+
+            <h1 class="learning-title">{{ lesson.title }}</h1>
+
+            <p class="learning-subtitle">
+                {{ lesson.text }}
+            </p>
+
+            <div class="reason-card">
+                <h3>Why it feels hard</h3>
+
+                <div class="reason-item">
+                    <div class="reason-icon step-icon step-icon-skidding"></div>
+                    <div class="reason-text">
+                        <strong>Too fast</strong>
+                        <p>You pick up speed quickly in a turn, making it hard to react.</p>
+                    </div>
+                </div>
+
+                <div class="reason-item">
+                    <div class="reason-icon step-icon step-icon-carving"></div>
+                    <div class="reason-text">
+                        <strong>Too slippery</strong>
+                        <p>Your board can slide out from under you on the edge.</p>
+                    </div>
+                </div>
+
+                <div class="reason-item">
+                    <div class="reason-icon step-icon step-icon-quiz"></div>
+                    <div class="reason-text">
+                        <strong>Hard to stop</strong>
+                        <p>Without the right skills, it takes too long to slow down.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learning-actions">
+                <button
+                    id="next-btn"
+                    class="next-button"
+                    data-next="{{ lesson.next_lesson }}"
+                    data-lesson-id="{{ lesson.lesson_id }}">
+                    Next →
+                </button>
+
+                <div class="next-preview">
+                    <div class="next-preview-icon step-icon step-icon-carving"></div>
+                    <div>
+                        <strong>Step 2: Master Carving</strong><br>
+                        Discover carving techniques for smooth, efficient turns.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="learning-right">
+
+            <div class="video-panel">
+                <video controls>
+                    <source src="{{ lesson.media }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="fix-card">
+                <div class="fix-icon step-icon step-icon-quiz"></div>
+                <div>
+                    <h3>Let’s fix that by understanding two key techniques.</h3>
+                    <p>Master these and you'll turn with control and confidence.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/learn.js') }}"></script>
+
 {% endblock %}

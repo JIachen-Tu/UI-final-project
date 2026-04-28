@@ -1,0 +1,227 @@
+.learning-page {
+    min-height: calc(100vh - 72px);
+    padding: 32px 9% 48px;
+    background-image: url("/static/data/background.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+.back-link {
+    color: #0077ff;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 28px;
+}
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.45fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.step-pill {
+    display: inline-flex;
+    gap: 14px;
+    align-items: center;
+    background: rgba(230, 242, 255, 0.9);
+    color: #0077ff;
+    border: 1px solid #d6e9ff;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-weight: 800;
+    margin-bottom: 24px;
+}
+
+.learning-title {
+    font-size: 56px;
+    line-height: 1.05;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 22px;
+    max-width: 560px;
+}
+
+.learning-subtitle {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #475569;
+    margin-bottom: 30px;
+    max-width: 520px;
+}
+
+.reason-card {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    margin-bottom: 34px;
+    max-width: 410px;
+}
+
+.reason-card h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+    color: #0f172a;
+}
+
+.reason-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px;
+    background: white;
+    border-radius: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.reason-item:last-child {
+    margin-bottom: 0;
+}
+
+.reason-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #eaf4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0077ff;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.reason-text strong {
+    display: block;
+    color: #0f172a;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.reason-text p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.learning-actions {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.next-button {
+    background: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 30px;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(0, 119, 255, 0.25);
+}
+
+.next-button:hover {
+    background: #006be6;
+}
+
+.next-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.next-preview strong {
+    color: #2563eb;
+}
+
+.next-preview-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #eaf4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0077ff;
+    font-size: 22px;
+}
+
+.video-panel video {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    border-radius: 22px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    background: #000;
+}
+
+.fix-card {
+    margin-top: 26px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid #dbeafe;
+    border-radius: 22px;
+    padding: 24px 32px;
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+}
+
+.fix-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #eaf4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0077ff;
+    font-size: 34px;
+    flex-shrink: 0;
+}
+
+.fix-card h3 {
+    font-size: 24px;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.fix-card p {
+    color: #475569;
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .learning-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .learning-title {
+        font-size: 40px;
+    }
+
+    .reason-card {
+        max-width: 100%;
+    }
+}
+
+.reason-icon.step-icon,
+.next-preview-icon.step-icon,
+.fix-icon.step-icon {
+    background-size: 160px 160px;
+    border-radius: 50%;
+    background-color: #eaf4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
