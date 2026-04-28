@@ -4,13 +4,18 @@
 
 <div class="quiz-page-body">
     <div class="container">
-        <div class="quiz-intro-section">
-            <h1>Quiz Time</h1>
-            <p>Test your knowledge and track your progress.</p>
-            
-            <div class="quiz-progress-container">
-                <div class="quiz-progress-fill" style="width: {{ (question.quiz_id|int / 5) * 100 }}%;"></div>
+        <div class="quiz-intro-section d-flex align-items-center">
+            <div class="mr-4">
+                <span class="step-icon step-icon-quiz"></span>
             </div>
+            <div>
+                <h1>Quiz Time</h1>
+                <p class="mb-0">Test your knowledge and track your progress.</p>
+            </div>
+        </div>
+        
+        <div class="quiz-progress-container">
+            <div class="quiz-progress-fill" style="width: {{ (question.quiz_id|int / 5) * 100 }}%;"></div>
         </div>
 
         <div class="row">
@@ -36,7 +41,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <a href="javascript:history.back()" class="text-muted font-weight-bold">← Back</a>
+                        <a href="javascript:history.back()" class="text-muted font-weight-bold" style="text-decoration: none;">← Back</a>
                         <button id="submit-btn" class="btn btn-submit" style="display:none;">Submit Answer</button>
                     </div>
                 </div>
