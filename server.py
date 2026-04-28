@@ -74,11 +74,46 @@ learning_content = {
 }
 
 quiz_content = {
-    "1": {"id": "1", "q": "Main difference between carving and skidding?", "options": ["Speed", "Edge vs sliding", "Equipment"], "a": "Edge vs sliding", "next": "2"},
-    "2": {"id": "2", "q": "Which technique is easier for beginners?", "options": ["Carving", "Skidding"], "a": "Skidding", "next": "3"},
-    "3": {"id": "3", "q": "Which technique gives more control at high speeds?", "options": ["Skidding", "Carving"], "a": "Carving", "next": "4"},
-    "4": {"id": "4", "q": "Identify the Carving position:", "media": "/static/images/quiz_carve.jpg", "options": ["A", "B"], "a": "A", "next": "5"},
-    "5": {"id": "5", "q": "How can you tell someone is carving by tracks?", "options": ["Wide messy tracks", "Thin clean tracks"], "a": "Thin clean tracks", "next": "results"}
+    "1": {
+        "id": "1", 
+        "q": "Main difference between carving and skidding?", 
+        "media": "/static/data/snowboarder.jpg", 
+        "options": ["Speed", "Edge vs sliding", "Equipment"], 
+        "a": "Edge vs sliding", 
+        "next": "2"
+    },
+    "2": {
+        "id": "2", 
+        "q": "Which technique is easier for beginners?", 
+        "media": "/static/data/snowboarder.jpg", 
+        "options": ["Carving", "Skidding"], 
+        "a": "Skidding", 
+        "next": "3"
+    },
+    "3": {
+        "id": "3", 
+        "q": "Which technique gives more control at high speeds?", 
+        "media": "/static/data/snowboarder.jpg", 
+        "options": ["Skidding", "Carving"], 
+        "a": "Carving", 
+        "next": "4"
+    },
+    "4": {
+        "id": "4", 
+        "q": "Identify the Carving position:", 
+        "media": "/static/data/snowboarder.jpg", 
+        "options": ["A", "B"], 
+        "a": "A", 
+        "next": "5"
+    },
+    "5": {
+        "id": "5", 
+        "q": "How can you tell someone is carving by tracks?", 
+        "media": "/static/data/snowboarder.jpg", 
+        "options": ["Wide messy tracks", "Thin clean tracks"], 
+        "a": "Thin clean tracks", 
+        "next": "results"
+    }
 }
 
 
@@ -110,7 +145,6 @@ def learn(id):
         "next_lesson": "quiz" if str(content.get("next", "")).startswith("quiz") else content.get("next", "")
     }
     
-    
     return render_template('learn.html', lesson=lesson)
 
 @app.route('/learn/last_page', methods=["POST"])
@@ -138,6 +172,7 @@ def quiz(id):
         "quiz_id": content.get("id", id),
         "question": content.get("q", ""),
         "options": content.get("options", []),
+        "media": content.get("media", ""),
         "next_question": "end" if content.get("next") == "results" else content.get("next", "end")
     }
     return render_template('quiz.html', question=question)
