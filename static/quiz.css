@@ -2,38 +2,22 @@
     --brand-blue: #1d6fff;
     --text-dark: #172033;
     --text-muted: #5a6a85;
-    --bg-light: #f8fafc;
     --border-color: #e7edf5;
 }
 
-body {
-    background-color: var(--bg-light) !important;
-}
 
-.quiz-wrapper {
-    padding: 40px 0;
-}
-
-.content-card {
-    background: #ffffff;
-    border: 1px solid var(--border-color);
-    border-radius: 1rem;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
-    padding: 32px;
-}
-
-
-.quiz-page-body {
-    background-image: url("/static/data/background.jpg");
+.quiz-bg {
+    background-image: url("/static/data/background.png");
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
-    min-height: 100vh;
+    background-repeat: no-repeat;
+    min-height: calc(100vh - 70px); 
+    padding-top: 40px;
+    padding-bottom: 60px;
 }
 
 .quiz-intro-section {
-    padding: 60px 0 40px;
-    text-align: left;
+    margin-bottom: 20px;
 }
 
 .quiz-intro-section h1 {
@@ -57,18 +41,9 @@ body {
 }
 
 .quiz-progress-fill {
-    background-color: #1d6fff;
+    background-color: var(--brand-blue);
     height: 100%;
     transition: width 0.4s ease;
-}
-
-.results-page-body {
-    background-image: url("/static/data/quiz_complete_background.jpg");
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .content-card {
@@ -76,7 +51,7 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(231, 237, 245, 0.8);
     border-radius: 1.25rem;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     padding: 40px;
 }
 
@@ -88,6 +63,12 @@ body {
     letter-spacing: 0.05em;
     margin-bottom: 8px;
     display: block;
+}
+
+.step-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
 }
 
 .option-container {
@@ -147,7 +128,6 @@ body {
     padding: 12px 32px;
     border-radius: 8px;
     font-weight: 700;
-    margin-top: 24px;
     transition: opacity 0.2s;
 }
 
@@ -157,41 +137,14 @@ body {
 }
 
 .tip-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-dark);
     margin-bottom: 12px;
 }
 
 .tip-desc {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
     line-height: 1.6;
-}
-
-.score-circle {
-    width: 160px;
-    height: 160px;
-    border: 8px solid #eef2ff;
-    border-top-color: var(--brand-blue);
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 40px auto;
-}
-
-.score-value {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--brand-blue);
-    line-height: 1;
-}
-
-.score-label {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    font-weight: 700;
 }
