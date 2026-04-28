@@ -77,7 +77,6 @@ quiz_content = {
     "1": {
         "id": "1", 
         "q": "Main difference between carving and skidding?", 
-        "media": "/static/data/snowboarder_withbg.png", 
         "options": ["Speed", "Edge vs sliding", "Equipment"], 
         "a": "Edge vs sliding", 
         "next": "2"
@@ -85,15 +84,13 @@ quiz_content = {
     "2": {
         "id": "2", 
         "q": "Which technique is easier for beginners?", 
-        "media": "/static/data/snowboarder_withbg.png", 
         "options": ["Carving", "Skidding"], 
         "a": "Skidding", 
         "next": "3"
     },
     "3": {
         "id": "3", 
-        "q": "Which technique gives more control at high speeds?", 
-        "media": "/static/data/snowboarder_withbg.png", 
+        "q": "Which technique gives more control at high speeds?",  
         "options": ["Skidding", "Carving"], 
         "a": "Carving", 
         "next": "4"
@@ -101,7 +98,6 @@ quiz_content = {
     "4": {
         "id": "4", 
         "q": "Identify the Carving position:", 
-        "media": "/static/data/snowboarder_withbg.png", 
         "options": ["A", "B"], 
         "a": "A", 
         "next": "5"
@@ -109,7 +105,6 @@ quiz_content = {
     "5": {
         "id": "5", 
         "q": "How can you tell someone is carving by tracks?", 
-        "media": "/static/data/snowboarder_withbg.png", 
         "options": ["Wide messy tracks", "Thin clean tracks"], 
         "a": "Thin clean tracks", 
         "next": "results"
