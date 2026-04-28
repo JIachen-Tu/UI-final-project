@@ -162,6 +162,12 @@ def quiz(id):
     content = quiz_content.get(id)
     if content is None:
         abort(404)
+    
+    id = content.get("id", id)
+    
+    if id == 1 and user_data["score"] != 0:
+        user_data["score"] = 0
+        user_data["results"] = {}
 
     question = {
         "quiz_id": content.get("id", id),

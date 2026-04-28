@@ -131,11 +131,102 @@
 }
 
 .score-card {
-    min-height: 420px;
+    min-height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
     border: 1px solid #e0e8f5;
     box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+}
+
+.feedback-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fff8dc 0%, #fff4ce 100%);
+    border: 1px solid #efdfa8;
+    border-radius: 16px;
+    padding: 20px 24px;
+    gap: 18px;
+    box-shadow: 0 10px 24px rgba(114, 90, 30, 0.12);
+}
+
+.feedback-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: #e3ab16;
+}
+
+.feedback-icon-wrapper {
+    flex-shrink: 0;
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+    background: #fffdf6;
+    border: 2px solid #efdfa8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(114, 90, 30, 0.1);
+}
+
+.feedback-trophy-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.feedback-content {
+    flex: 1;
+}
+
+.feedback-title {
+    margin-bottom: 6px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #7a5a00;
+    line-height: 1.1;
+}
+
+.feedback-desc {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: #7b5b00;
+    line-height: 1.35;
+}
+
+@media (min-width: 768px) {
+    .feedback-card {
+        width: 104%;
+        margin-left: -2%;
+    }
+}
+
+.congratulation-card {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid #e0e8f5;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+}
+
+.check-badge {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: #dcebff;
+    box-shadow: 0 10px 24px rgba(29, 111, 255, 0.25);
+}
+
+.check-badge i {
+    color: #1d6fff;
+    font-size: 2.5rem;
+    line-height: 1;
 }

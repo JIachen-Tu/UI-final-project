@@ -2,7 +2,8 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
 <div class="result-bg">
-    <!--
+    <div class="container">
+        <!--
     <div class="results-page-body">
         <div class="result-card">
             <span class="result-subtitle">Quiz Complete</span>
@@ -27,31 +28,59 @@
             </div>
         </div>
     </div>-->
-
-    <div class="container">
         <div class="result-container my-5">
             <div class="row align-items-start mt-5">
+
+                <!-- Left Column -->
                 <div class="col-md-6">
+
                     <h1 class="result-title">Quiz Completed!</h1>
                     <p class="result-desc">
                         Nice work! You've taken another step toward becoming a more confident, skilled rider.
                     </p>
-                    
+
+                    <div class="check-badge d-flex align-items-center justify-content-center mt-4 mx-auto">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+
                 </div>
 
+                <!-- Right Column -->
                 <div class="col-md-6">
+
+                    <!-- Score Card -->
                     <div class="card score-card">
                         <div class="score-circle-wrapper">
                             <span class="score-label-small">Your Final Score</span>
                             <span class="score-value-large">{{ score }}/5</span>
                         </div>
                     </div>
-                </div>
 
+
+                    <!-- Feedback Card -->
+                    <div class="card feedback-card mt-3 d-flex flex-row align-items-center">
+                        <div class="feedback-icon-wrapper">
+                            <img src="{{ url_for('static', filename='data/trophy.jpg') }}" alt="Trophy" class="feedback-trophy-img">
+                        </div>
+                        <div class="feedback-content">
+                            {% if score >= 4 %}
+                            <h5 class="feedback-title">Good Job!</h5>
+                            <p class="feedback-desc">Consider reviewing the difference between sliding and cutting into
+                                the
+                                snow.</p>
+                            {% else %}
+                            <h5 class="feedback-title">Keep Practicing!</h5>
+                            <p class="feedback-desc">Keep reviewing the material to improve your snowboarding skills.
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
-        <div class="result-button-container my-5">
+        <div class="result-button-container my-8">
             <div class="d-flex justify-content-center gap-3">
                 <a href="/" class="btn btn-home mr-3">Back to Home</a>
                 <a href="/quiz/1" class="btn btn-retake">Retake Quiz</a>
