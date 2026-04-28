@@ -50,9 +50,19 @@
 
                     <!-- Score Card -->
                     <div class="card score-card">
-                        <div class="score-circle-wrapper">
-                            <span class="score-label-small">Your Final Score</span>
-                            <span class="score-value-large">{{ score }}/5</span>
+                        <h5 class="score-card-title">Your Final Score</h5>
+                        <div class="score-circle-wrapper" style="--score-value: {{ score * 20 }}%;">
+                            <div class="score-inner">
+                                <div class="score-number">
+                                    <span class="score-main">{{ score }}</span>
+                                    <span class="score-total">/ 5</span>
+                                </div>
+                                <div class="score-stars">
+                                    {% for i in range(1, 6) %}
+                                    <i class="bi {% if i <= score %}bi-star-fill{% else %}bi-star{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -50,33 +50,70 @@
 
 
 .score-circle-wrapper {
-    width: 180px;
-    height: 180px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
-    border: 10px solid #eef3ff;
-    border-top-color: #1d6fff; 
+    background: conic-gradient(#1d6fff var(--score-value), #e2e8f4 0);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 40px auto;
+    margin: 0 auto;
+    position: relative;
+    padding: 14px;
 }
 
-.score-label-small {
-    font-size: 0.75rem;
-    color: #5a6a85;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
+.score-circle-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    z-index: 0;
 }
 
-.score-value-large {
-    font-size: 3.5rem;
+.score-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.score-number {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.score-main {
+    font-size: 4.6rem;
     font-weight: 800;
-    color: #1d6fff;
+    color: #0b1b4a;
     line-height: 1;
     font-family: 'Montserrat', sans-serif;
+}
+
+.score-total {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #62708b;
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.score-stars {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.score-stars i {
+    color: #1d6fff;
+    font-size: 1.5rem;
+}
+
+.score-stars i.bi-star {
+    color: #cfd8e6;
 }
 
 .result-feedback-title {
@@ -131,13 +168,23 @@
 }
 
 .score-card {
-    min-height: 350px;
+    min-height: 380px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
-    border: 1px solid #e0e8f5;
-    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+    border-radius: 24px;
+    border: 1px solid #e7edf7;
+    background: #ffffff;
+    box-shadow: 0 16px 36px rgba(16, 24, 40, 0.12);
+    padding: 28px 20px;
+}
+
+.score-card-title {
+    font-size: 2rem;
+    color: #1f2a44;
+    font-weight: 600;
+    margin-bottom: 18px;
 }
 
 .feedback-card {
