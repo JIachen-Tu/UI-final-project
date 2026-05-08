@@ -11,57 +11,78 @@ learning_content = {
         "id": "1",
         "title": "Why does turning feel hard?",
         "media_type": "video",
-        "media_url": "/static/videos/snowboarding.mp4",
+        "media_url": "/static/videos/learn_1.mp4",
         "points": [
             "Many beginners lose control when turning",
             "Turns feel too fast, slippery, and hard to stop"
         ],
         "hint": "Let's fix that by understanding two key techniques.",
+        "next_preview": {
+            "title": "Step 2: What is Skidding?",
+            "description": "Learn how skidded turns help beginners slow down and stay in control.",
+            "icon": "step-icon-skidding"
+        },
         "next": "2"
     },
     "2": {
         "id": "2",
         "title": "What is Skidding?",
         "media_type": "video",
-        "media_url": "/static/videos/snowboarding.mp4",
+        "media_url": "/static/videos/learn_2.mp4",
+        "note": "How to make basic skidded turns.",
         "points": [
             "Board slides sideways",
             "Less grip on snow",
             "Easier for beginners",
             "Less stable at high speed"
         ],
+        "next_preview": {
+            "title": "Step 3: What is Carving?",
+            "description": "See how clean edge control creates smoother, more efficient turns.",
+            "icon": "step-icon-carving"
+        },
         "next": "3"
     },
     "3": {
         "id": "3",
         "title": "What is Carving?",
         "media_type": "video",
-        "media_url": "/static/videos/snowboarding.mp4",
+        "media_url": "/static/videos/learn_3.mp4",
         "points": [
             "Board edge cuts into snow",
             "Smooth curved motion",
             "More control at speed",
             "Clean and efficient"
         ],
+        "next_preview": {
+            "title": "Step 4: Carve vs Skidded Turns",
+            "description": "Compare the snow tracks that show whether a turn is carved or skidded.",
+            "icon": "step-icon-quiz"
+        },
         "next": "4"
     },
     "4": {
         "id": "4",
-        "title": "Snow Tracks: The Visual Cue",
+        "title": "Carve vs Skidded Turns",
         "media_type": "video",
-        "media_url": "/static/videos/snowboarding.mp4",
+        "media_url": "/static/videos/learn_4.mp4",
         "points": [
             "Skidding -> messy, wide tracks",
             "Carving -> thin, clean lines"
         ],
         "hint": "Looking at tracks is the best way to tell which is which!",
+        "next_preview": {
+            "title": "Step 5: How to Control Speed",
+            "description": "Apply skidding and carving choices when the slope feels too fast.",
+            "icon": "step-icon-skidding"
+        },
         "next": "5"
     },
     "5": {
         "id": "5",
-        "title": "Scenario: Losing Control!",
+        "title": "Scenario: Losing Control! How to Control Speed",
         "media_type": "video",
-        "media_url": "/static/videos/snowboarding.mp4",
+        "media_url": "/static/videos/learn_5.mp4",
         "points": [
             "Scenario: You are riding down a steep slope, speed is increasing, and you feel out of control."
         ],
@@ -136,7 +157,10 @@ def learn(id):
         "title": content.get("title", ""),
         "lesson_id": lesson_id,
         "media": content.get("media_url", ""),
+        "note": content.get("note", ""),
         "text": " ".join(content.get("points", [])),
+        "prev_lesson": str(lesson_id - 1) if lesson_id > 1 else "",
+        "next_preview": content.get("next_preview"),
         "next_lesson": "quiz" if str(content.get("next", "")).startswith("quiz") else content.get("next", "")
     }
     

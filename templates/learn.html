@@ -24,6 +24,10 @@
                 {{ lesson.text }}
             </p>
 
+            {% if lesson.note %}
+            <p class="learning-note">{{ lesson.note }}</p>
+            {% endif %}
+
             <div class="reason-card">
                 <h3>Why it feels hard</h3>
 
@@ -53,6 +57,10 @@
             </div>
 
             <div class="learning-actions">
+                {% if lesson.prev_lesson %}
+                <a href="{{ url_for('learn', id=lesson.prev_lesson) }}" class="back-step-button">← Back</a>
+                {% endif %}
+
                 <button
                     id="next-btn"
                     class="next-button"
@@ -61,13 +69,15 @@
                     Next →
                 </button>
 
+                {% if lesson.next_preview %}
                 <div class="next-preview">
-                    <div class="next-preview-icon step-icon step-icon-carving"></div>
+                    <div class="next-preview-icon step-icon {{ lesson.next_preview.icon }}"></div>
                     <div>
-                        <strong>Step 2: Master Carving</strong><br>
-                        Discover carving techniques for smooth, efficient turns.
+                        <strong>{{ lesson.next_preview.title }}</strong><br>
+                        {{ lesson.next_preview.description }}
                     </div>
                 </div>
+                {% endif %}
             </div>
 
         </div>
