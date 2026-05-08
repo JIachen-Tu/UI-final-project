@@ -72,6 +72,21 @@
     color: var(--text-dark);
 }
 
+.media-container {
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f8fbff;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.quiz-question-media {
+    display: block;
+    width: 100%;
+    height: min(46vh, 460px);
+    object-fit: contain;
+}
+
 .option-container {
     display: flex;
     flex-direction: column;
@@ -148,4 +163,10 @@
     font-size: 0.95rem;
     color: var(--text-muted);
     line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .quiz-question-media {
+        height: auto;
+    }
 }

@@ -27,7 +27,7 @@
 
                     {% if question.media %}
                     <div class="media-container mb-4">
-                        <img src="{{ question.media }}" class="img-fluid rounded shadow-sm" style="width:100%; border: 1px solid #e7edf5;">
+                        <img src="{{ question.media }}" alt="Snowboard carving track comparison" class="quiz-question-media">
                     </div>
                     {% endif %}
 
@@ -54,8 +54,8 @@
 
             <div class="col-lg-4">
                 <div class="content-card" style="border-top: 4px solid #1d6fff;">
-                    <h5 class="tip-title">Choose the best answer</h5>
-                    <p class="tip-desc">Think about what you've learned so far. You've got this!</p>
+                    <h5 class="tip-title">{{ question.tip_title }}</h5>
+                    <p class="tip-desc">{{ question.tip_desc }}</p>
                     
                     <div class="mt-4 text-center">
                         <img src="/static/data/snowboarder_withbg.png" alt="Snowboarder Hint" class="img-fluid rounded" style="max-height: 250px; width: 100%; object-fit: cover;">

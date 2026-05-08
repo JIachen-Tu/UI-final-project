@@ -138,9 +138,12 @@ quiz_content = {
     },
     "4": {
         "id": "4",
-        "q": "Identify the Carving position:",
-        "options": ["A", "B"],
-        "a": "A",
+        "q": "Which snowboard track shows a carving arc?",
+        "options": ["Left track", "Right track"],
+        "a": "Left track",
+        "media": "/static/data/carving-track-comparison.png",
+        "tip_title": "Compare the two arcs",
+        "tip_desc": "Focus on the shape and texture of each snowboard track before choosing your answer.",
         "prev": "/learn/4",
         "next": "/learn/5"
     },
@@ -250,6 +253,8 @@ def quiz(id):
         "question": content.get("q", ""),
         "options": content.get("options", []),
         "media": content.get("media", ""),
+        "tip_title": content.get("tip_title", "Choose the best answer"),
+        "tip_desc": content.get("tip_desc", "Think about what you've learned so far. You've got this!"),
         "prev_url": content.get("prev", ""),
         "next_url": content.get("next", "/results"),
     }
