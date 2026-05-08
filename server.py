@@ -4,7 +4,14 @@ import time
 
 app = Flask(__name__)
 
-user_data = {"score": 0, "results": {}, "learn_enter_time": {}, "learn_stay_time": {}}
+user_data = {
+    "score": 0,                # last finalized quiz score (shown on /results)
+    "results": {},             # last finalized answer map
+    "score_attempt": 0,        # in-progress accumulator
+    "results_attempt": {},     # in-progress answer map
+    "learn_enter_time": {},
+    "learn_stay_time": {},
+}
 
 learning_content = {
     "1": {
@@ -105,6 +112,7 @@ quiz_content = {
         "q": "Main difference between carving and skidding?",
         "options": ["Speed", "Edge vs sliding", "Equipment"],
         "a": "Edge vs sliding",
+        "prev": "/learn/3",
         "next": "/learn/4"
     },
     "2": {
@@ -112,6 +120,7 @@ quiz_content = {
         "q": "Which technique is easier for beginners?",
         "options": ["Carving", "Skidding"],
         "a": "Skidding",
+        "prev": "/learn/2",
         "next": "/learn/3"
     },
     "3": {
@@ -119,6 +128,7 @@ quiz_content = {
         "q": "Which technique gives more control at high speeds?",
         "options": ["Skidding", "Carving"],
         "a": "Carving",
+        "prev": "/learn/3",
         "next": "/quiz/1"
     },
     "4": {
@@ -126,6 +136,7 @@ quiz_content = {
         "q": "Identify the Carving position:",
         "options": ["A", "B"],
         "a": "A",
+        "prev": "/learn/4",
         "next": "/learn/5"
     },
     "5": {
@@ -133,6 +144,7 @@ quiz_content = {
         "q": "How can you tell someone is carving by tracks?",
         "options": ["Wide messy tracks", "Thin clean tracks"],
         "a": "Thin clean tracks",
+        "prev": "/learn/5",
         "next": "/results"
     }
 }
@@ -144,8 +156,15 @@ QUIZ_ORDER = ["2", "3", "1", "4", "5"]
 def reset_session():
     user_data["score"] = 0
     user_data["results"] = {}
+    user_data["score_attempt"] = 0
+    user_data["results_attempt"] = {}
     user_data["learn_enter_time"] = {}
     user_data["learn_stay_time"] = {}
+
+
+def reset_attempt():
+    user_data["score_attempt"] = 0
+    user_data["results_attempt"] = {}
 
 
 @app.route('/')
@@ -209,6 +228,10 @@ def quiz(id):
     if content is None:
         abort(404)
 
+    # Entering the first question of the sequence starts a fresh attempt.
+    if id == QUIZ_ORDER[0]:
+        reset_attempt()
+
     try:
         position = QUIZ_ORDER.index(id) + 1
     except ValueError:
@@ -221,6 +244,7 @@ def quiz(id):
         "question": content.get("q", ""),
         "options": content.get("options", []),
         "media": content.get("media", ""),
+        "prev_url": content.get("prev", ""),
         "next_url": content.get("next", "/results"),
     }
     return render_template('quiz.html', question=question)
@@ -236,8 +260,13 @@ def record_answer():
         return jsonify(success=False, error="Invalid quiz_id"), 400
 
     if user_answer == quiz_content[quiz_id]['a']:
-        user_data["score"] += 1
-    user_data["results"][quiz_id] = user_answer
+        user_data["score_attempt"] += 1
+    user_data["results_attempt"][quiz_id] = user_answer
+
+    # Finalize when the last question in the display order is answered.
+    if quiz_id == QUIZ_ORDER[-1]:
+        user_data["score"] = user_data["score_attempt"]
+        user_data["results"] = dict(user_data["results_attempt"])
 
     return jsonify(success=True)
 
@@ -249,8 +278,7 @@ def record():
 
 @app.route('/retake')
 def retake():
-    user_data["score"] = 0
-    user_data["results"] = {}
+    reset_attempt()
     return redirect(url_for('quiz', id=QUIZ_ORDER[0]))
 
 
