@@ -59,8 +59,8 @@
                     </div>
 
                     <div class="learning-actions">
-                        {% if lesson.lesson_id > 1 %}
-                        <a href="javascript:history.back()" class="back-step-button">← Back</a>
+                        {% if lesson.prev_url %}
+                        <a href="{{ lesson.prev_url }}" class="back-step-button">← Back</a>
                         {% endif %}
 
                         <button id="next-btn" class="next-button" data-next-url="{{ lesson.next_url }}"

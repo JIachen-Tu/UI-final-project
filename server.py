@@ -29,6 +29,7 @@ learning_content = {
             "description": "Learn how skidded turns help beginners slow down and stay in control.",
             "icon": "step-icon-skidding"
         },
+        "prev": "",
         "next": "/learn/2"
     },
     "2": {
@@ -48,6 +49,7 @@ learning_content = {
             "description": "Answer one question to lock in what you just learned.",
             "icon": "step-icon-quiz"
         },
+        "prev": "/learn/1",
         "next": "/quiz/2"
     },
     "3": {
@@ -66,6 +68,7 @@ learning_content = {
             "description": "Test what carving is best for before moving on.",
             "icon": "step-icon-quiz"
         },
+        "prev": "/quiz/2",
         "next": "/quiz/3"
     },
     "4": {
@@ -83,6 +86,7 @@ learning_content = {
             "description": "Identify carving vs skidding from position and tracks.",
             "icon": "step-icon-quiz"
         },
+        "prev": "/quiz/1",
         "next": "/quiz/4"
     },
     "5": {
@@ -102,6 +106,7 @@ learning_content = {
             "description": "One last check on what you'd do in this scenario.",
             "icon": "step-icon-quiz"
         },
+        "prev": "/quiz/4",
         "next": "/quiz/5"
     }
 }
@@ -112,7 +117,7 @@ quiz_content = {
         "q": "Main difference between carving and skidding?",
         "options": ["Speed", "Edge vs sliding", "Equipment"],
         "a": "Edge vs sliding",
-        "prev": "/learn/3",
+        "prev": "/quiz/3",
         "next": "/learn/4"
     },
     "2": {
@@ -192,6 +197,7 @@ def learn(id):
         "note": content.get("note", ""),
         "text": " ".join(content.get("points", [])),
         "next_preview": content.get("next_preview"),
+        "prev_url": content.get("prev", ""),
         "next_url": content.get("next", "/results"),
     }
 
