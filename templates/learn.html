@@ -8,100 +8,103 @@
 
     <a href="{{ url_for('home') }}" class="back-link">← Back to Learn</a>
 
-    <section class="learning-grid">
+    <div class="container">
+    <!--<section class="learning-grid">-->
+        <div class="row">
+            <div class="col-md-7">
+                <div class="learning-left">
 
-        <div class="learning-left">
+                    <div class="step-pill">
+                        <span>STEP {{ lesson.lesson_id }} OF 5</span>
+                        <span>→</span>
+                        <span>{{ lesson.title }}</span>
+                    </div>
 
-            <div class="step-pill">
-                <span>STEP {{ lesson.lesson_id }} OF 5</span>
-                <span>→</span>
-                <span>{{ lesson.title }}</span>
+                    <h1 class="learning-title">{{ lesson.title }}</h1>
+
+                    <p class="learning-subtitle">
+                        {{ lesson.text }}
+                    </p>
+
+                    {% if lesson.note %}
+                    <p class="learning-note">{{ lesson.note }}</p>
+                    {% endif %}
+
+                    <div class="reason-card">
+                        <h3>Why it feels hard</h3>
+
+                        <div class="reason-item">
+                            <div class="reason-icon step-icon step-icon-skidding"></div>
+                            <div class="reason-text">
+                                <strong>Too fast</strong>
+                                <p>You pick up speed quickly in a turn, making it hard to react.</p>
+                            </div>
+                        </div>
+
+                        <div class="reason-item">
+                            <div class="reason-icon step-icon step-icon-carving"></div>
+                            <div class="reason-text">
+                                <strong>Too slippery</strong>
+                                <p>Your board can slide out from under you on the edge.</p>
+                            </div>
+                        </div>
+
+                        <div class="reason-item">
+                            <div class="reason-icon step-icon step-icon-quiz"></div>
+                            <div class="reason-text">
+                                <strong>Hard to stop</strong>
+                                <p>Without the right skills, it takes too long to slow down.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-actions">
+                        {% if lesson.prev_lesson %}
+                        <a href="{{ url_for('learn', id=lesson.prev_lesson) }}" class="back-step-button">← Back</a>
+                        {% endif %}
+
+                        <button id="next-btn" class="next-button" data-next="{{ lesson.next_lesson }}"
+                            data-lesson-id="{{ lesson.lesson_id }}">
+                            Next →
+                        </button>
+
+                        {% if lesson.next_preview %}
+                        <div class="next-preview">
+                            <div class="next-preview-icon step-icon {{ lesson.next_preview.icon }}"></div>
+                            <div>
+                                <strong>{{ lesson.next_preview.title }}</strong><br>
+                                {{ lesson.next_preview.description }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
             </div>
 
-            <h1 class="learning-title">{{ lesson.title }}</h1>
+            <div class="col-md-5">
+                <div class="learning-right">
 
-            <p class="learning-subtitle">
-                {{ lesson.text }}
-            </p>
-
-            {% if lesson.note %}
-            <p class="learning-note">{{ lesson.note }}</p>
-            {% endif %}
-
-            <div class="reason-card">
-                <h3>Why it feels hard</h3>
-
-                <div class="reason-item">
-                    <div class="reason-icon step-icon step-icon-skidding"></div>
-                    <div class="reason-text">
-                        <strong>Too fast</strong>
-                        <p>You pick up speed quickly in a turn, making it hard to react.</p>
+                    <div class="video-panel">
+                        <video controls>
+                            <source src="{{ lesson.media }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
-                </div>
 
-                <div class="reason-item">
-                    <div class="reason-icon step-icon step-icon-carving"></div>
-                    <div class="reason-text">
-                        <strong>Too slippery</strong>
-                        <p>Your board can slide out from under you on the edge.</p>
+                    <div class="fix-card">
+                        <div class="fix-icon step-icon step-icon-quiz"></div>
+                        <div>
+                            <h3>Let’s fix that by understanding two key techniques.</h3>
+                            <p>Master these and you'll turn with control and confidence.</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="reason-item">
-                    <div class="reason-icon step-icon step-icon-quiz"></div>
-                    <div class="reason-text">
-                        <strong>Hard to stop</strong>
-                        <p>Without the right skills, it takes too long to slow down.</p>
-                    </div>
                 </div>
             </div>
-
-            <div class="learning-actions">
-                {% if lesson.prev_lesson %}
-                <a href="{{ url_for('learn', id=lesson.prev_lesson) }}" class="back-step-button">← Back</a>
-                {% endif %}
-
-                <button
-                    id="next-btn"
-                    class="next-button"
-                    data-next="{{ lesson.next_lesson }}"
-                    data-lesson-id="{{ lesson.lesson_id }}">
-                    Next →
-                </button>
-
-                {% if lesson.next_preview %}
-                <div class="next-preview">
-                    <div class="next-preview-icon step-icon {{ lesson.next_preview.icon }}"></div>
-                    <div>
-                        <strong>{{ lesson.next_preview.title }}</strong><br>
-                        {{ lesson.next_preview.description }}
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-
         </div>
-
-        <div class="learning-right">
-
-            <div class="video-panel">
-                <video controls>
-                    <source src="{{ lesson.media }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="fix-card">
-                <div class="fix-icon step-icon step-icon-quiz"></div>
-                <div>
-                    <h3>Let’s fix that by understanding two key techniques.</h3>
-                    <p>Master these and you'll turn with control and confidence.</p>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
+   <!--</section>-->
+   </div>
 
 </main>
 
