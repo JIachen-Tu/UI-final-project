@@ -22,7 +22,7 @@ learning_content = {
             "description": "Learn how skidded turns help beginners slow down and stay in control.",
             "icon": "step-icon-skidding"
         },
-        "next": "2"
+        "next": "/learn/2"
     },
     "2": {
         "id": "2",
@@ -37,11 +37,11 @@ learning_content = {
             "Less stable at high speed"
         ],
         "next_preview": {
-            "title": "Step 3: What is Carving?",
-            "description": "See how clean edge control creates smoother, more efficient turns.",
-            "icon": "step-icon-carving"
+            "title": "Quick Check: Skidding",
+            "description": "Answer one question to lock in what you just learned.",
+            "icon": "step-icon-quiz"
         },
-        "next": "3"
+        "next": "/quiz/2"
     },
     "3": {
         "id": "3",
@@ -55,11 +55,11 @@ learning_content = {
             "Clean and efficient"
         ],
         "next_preview": {
-            "title": "Step 4: Carve vs Skidded Turns",
-            "description": "Compare the snow tracks that show whether a turn is carved or skidded.",
+            "title": "Quick Check: Carving",
+            "description": "Test what carving is best for before moving on.",
             "icon": "step-icon-quiz"
         },
-        "next": "4"
+        "next": "/quiz/3"
     },
     "4": {
         "id": "4",
@@ -72,11 +72,11 @@ learning_content = {
         ],
         "hint": "Looking at tracks is the best way to tell which is which!",
         "next_preview": {
-            "title": "Step 5: How to Control Speed",
-            "description": "Apply skidding and carving choices when the slope feels too fast.",
-            "icon": "step-icon-skidding"
+            "title": "Quick Check: Spot the Turn",
+            "description": "Identify carving vs skidding from position and tracks.",
+            "icon": "step-icon-quiz"
         },
-        "next": "5"
+        "next": "/quiz/4"
     },
     "5": {
         "id": "5",
@@ -90,68 +90,81 @@ learning_content = {
         "options": ["A. Skidding", "B. Carving"],
         "answer": "A. Skidding",
         "feedback": "Correct! Skidding increases friction to help you slow down.",
-        "next": "quiz/1"
+        "next_preview": {
+            "title": "Final Question",
+            "description": "One last check on what you'd do in this scenario.",
+            "icon": "step-icon-quiz"
+        },
+        "next": "/quiz/5"
     }
 }
 
 quiz_content = {
     "1": {
-        "id": "1", 
-        "q": "Main difference between carving and skidding?", 
-        "options": ["Speed", "Edge vs sliding", "Equipment"], 
-        "a": "Edge vs sliding", 
-        "next": "2"
+        "id": "1",
+        "q": "Main difference between carving and skidding?",
+        "options": ["Speed", "Edge vs sliding", "Equipment"],
+        "a": "Edge vs sliding",
+        "next": "/learn/4"
     },
     "2": {
-        "id": "2", 
-        "q": "Which technique is easier for beginners?", 
-        "options": ["Carving", "Skidding"], 
-        "a": "Skidding", 
-        "next": "3"
+        "id": "2",
+        "q": "Which technique is easier for beginners?",
+        "options": ["Carving", "Skidding"],
+        "a": "Skidding",
+        "next": "/learn/3"
     },
     "3": {
-        "id": "3", 
-        "q": "Which technique gives more control at high speeds?",  
-        "options": ["Skidding", "Carving"], 
-        "a": "Carving", 
-        "next": "4"
+        "id": "3",
+        "q": "Which technique gives more control at high speeds?",
+        "options": ["Skidding", "Carving"],
+        "a": "Carving",
+        "next": "/quiz/1"
     },
     "4": {
-        "id": "4", 
-        "q": "Identify the Carving position:", 
-        "options": ["A", "B"], 
-        "a": "A", 
-        "next": "5"
+        "id": "4",
+        "q": "Identify the Carving position:",
+        "options": ["A", "B"],
+        "a": "A",
+        "next": "/learn/5"
     },
     "5": {
-        "id": "5", 
-        "q": "How can you tell someone is carving by tracks?", 
-        "options": ["Wide messy tracks", "Thin clean tracks"], 
-        "a": "Thin clean tracks", 
-        "next": "results"
+        "id": "5",
+        "q": "How can you tell someone is carving by tracks?",
+        "options": ["Wide messy tracks", "Thin clean tracks"],
+        "a": "Thin clean tracks",
+        "next": "/results"
     }
 }
 
+# Display order for quizzes — drives "Question X of N" and the progress bar.
+QUIZ_ORDER = ["2", "3", "1", "4", "5"]
 
 
-@app.route('/')
-def home():
+def reset_session():
     user_data["score"] = 0
     user_data["results"] = {}
     user_data["learn_enter_time"] = {}
     user_data["learn_stay_time"] = {}
+
+
+@app.route('/')
+def home():
+    reset_session()
     return render_template('home.html')
+
 
 @app.route('/learn/<id>')
 def learn(id):
     content = learning_content.get(id)
     if content is None:
         abort(404)
-    
+
+    user_data.setdefault("learn_enter_time", {})
+    user_data.setdefault("learn_stay_time", {})
+
     lesson_id = int(id)
     user_data["learn_enter_time"][lesson_id] = time.time()
-    if lesson_id != 1:
-        user_data["learn_stay_time"][lesson_id - 1] = user_data["learn_enter_time"][lesson_id] - user_data["learn_enter_time"][lesson_id - 1]
 
     lesson = {
         "title": content.get("title", ""),
@@ -159,26 +172,35 @@ def learn(id):
         "media": content.get("media_url", ""),
         "note": content.get("note", ""),
         "text": " ".join(content.get("points", [])),
-        "prev_lesson": str(lesson_id - 1) if lesson_id > 1 else "",
         "next_preview": content.get("next_preview"),
-        "next_lesson": "quiz" if str(content.get("next", "")).startswith("quiz") else content.get("next", "")
+        "next_url": content.get("next", "/results"),
     }
-    
+
     return render_template('learn.html', lesson=lesson)
+
 
 @app.route('/learn/last_page', methods=["POST"])
 def learn_last_page():
-    req = request.get_json()
-    
+    req = request.get_json(silent=True) or {}
     lesson_id = req.get("id")
-    
+
     if lesson_id is None:
         return jsonify(success=False, error="Missing lesson id"), 400
 
-    lesson_id = int(lesson_id)
-    user_data["learn_stay_time"][lesson_id] = time.time() - user_data["learn_enter_time"][lesson_id]
-    
-    return jsonify(success=True)
+    try:
+        lesson_id = int(lesson_id)
+    except (TypeError, ValueError):
+        return jsonify(success=False, error="Invalid lesson id"), 400
+
+    enter_time = user_data.get("learn_enter_time", {}).get(lesson_id)
+    if enter_time is None:
+        # Page never entered (probably direct navigation) — silently no-op.
+        return jsonify(success=True, recorded=False)
+
+    user_data.setdefault("learn_stay_time", {})
+    user_data["learn_stay_time"][lesson_id] = time.time() - enter_time
+
+    return jsonify(success=True, recorded=True)
 
 
 @app.route('/quiz/<id>')
@@ -186,25 +208,27 @@ def quiz(id):
     content = quiz_content.get(id)
     if content is None:
         abort(404)
-    
-    id = content.get("id", id)
-    
-    if id == 1 and user_data["score"] != 0:
-        user_data["score"] = 0
-        user_data["results"] = {}
+
+    try:
+        position = QUIZ_ORDER.index(id) + 1
+    except ValueError:
+        position = int(id)
 
     question = {
         "quiz_id": content.get("id", id),
+        "question_number": position,
+        "total_questions": len(QUIZ_ORDER),
         "question": content.get("q", ""),
         "options": content.get("options", []),
         "media": content.get("media", ""),
-        "next_question": "end" if content.get("next") == "results" else content.get("next", "end")
+        "next_url": content.get("next", "/results"),
     }
     return render_template('quiz.html', question=question)
 
+
 @app.route('/record_answer', methods=['POST'])
 def record_answer():
-    req = request.get_json()
+    req = request.get_json(silent=True) or {}
     quiz_id = req.get('quiz_id')
     user_answer = req.get('user_answer')
 
@@ -214,22 +238,26 @@ def record_answer():
     if user_answer == quiz_content[quiz_id]['a']:
         user_data["score"] += 1
     user_data["results"][quiz_id] = user_answer
-    
+
     return jsonify(success=True)
+
 
 @app.route('/record', methods=['POST'])
 def record():
     return record_answer()
 
+
 @app.route('/retake')
 def retake():
     user_data["score"] = 0
     user_data["results"] = {}
-    return redirect(url_for('quiz', id='1'))
+    return redirect(url_for('quiz', id=QUIZ_ORDER[0]))
+
 
 @app.route('/results')
 def results():
     return render_template('results.html', score=user_data["score"], total=len(quiz_content))
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
