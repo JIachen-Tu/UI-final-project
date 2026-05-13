@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, jsonify, abort, redirect, url_for
+from flask import Flask, render_template, request, jsonify, abort, redirect, url_for, session
 import os
 import time
 
 app = Flask(__name__)
+
+app.secret_key = "snowboarding_secret_key" 
+
 
 user_data = {
     "score": 0,                # last finalized quiz score (shown on /results)
@@ -177,7 +180,6 @@ def reset_attempt():
 
 @app.route('/')
 def home():
-    reset_session()
     return render_template('home.html')
 
 
@@ -267,19 +269,18 @@ def record_answer():
     quiz_id = req.get('quiz_id')
     user_answer = req.get('user_answer')
 
-    if not quiz_id or quiz_id not in quiz_content:
-        return jsonify(success=False, error="Invalid quiz_id"), 400
+    if 'current_attempt_score' not in session:
+        session['current_attempt_score'] = 0
 
     if user_answer == quiz_content[quiz_id]['a']:
-        user_data["score_attempt"] += 1
-    user_data["results_attempt"][quiz_id] = user_answer
+        session['current_attempt_score'] += 1
 
-    # Finalize when the last question in the display order is answered.
-    if quiz_id == QUIZ_ORDER[-1]:
-        user_data["score"] = user_data["score_attempt"]
-        user_data["results"] = dict(user_data["results_attempt"])
+    if quiz_id == "5": 
+        session['last_final_score'] = session['current_attempt_score']
+        session.pop('current_attempt_score', None)
 
     return jsonify(success=True)
+
 
 
 @app.route('/record', methods=['POST'])
@@ -289,13 +290,13 @@ def record():
 
 @app.route('/retake')
 def retake():
-    reset_attempt()
-    return redirect(url_for('quiz', id=QUIZ_ORDER[0]))
-
+    session['current_attempt_score'] = 0
+    return redirect(url_for('quiz', id='1'))
 
 @app.route('/results')
 def results():
-    return render_template('results.html', score=user_data["score"], total=len(quiz_content))
+    last_score = session.get('last_final_score', 0)
+    return render_template('results.html', score=last_score, total=5)
 
 
 if __name__ == '__main__':
