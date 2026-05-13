@@ -180,6 +180,7 @@ def reset_attempt():
 
 @app.route('/')
 def home():
+    session['quiz_mode'] = 'normal'
     return render_template('home.html')
 
 
@@ -224,7 +225,6 @@ def learn_last_page():
 
     enter_time = user_data.get("learn_enter_time", {}).get(lesson_id)
     if enter_time is None:
-        # Page never entered (probably direct navigation) — silently no-op.
         return jsonify(success=True, recorded=False)
 
     user_data.setdefault("learn_stay_time", {})
@@ -239,7 +239,6 @@ def quiz(id):
     if content is None:
         abort(404)
 
-    # Entering the first question of the sequence starts a fresh attempt.
     if id == QUIZ_ORDER[0]:
         reset_attempt()
 
@@ -247,6 +246,25 @@ def quiz(id):
         position = QUIZ_ORDER.index(id) + 1
     except ValueError:
         position = int(id)
+
+    if session.get('quiz_mode') == 'retake':
+        try:
+            curr_idx = QUIZ_ORDER.index(id)
+            if curr_idx < len(QUIZ_ORDER) - 1:
+                next_url = "/quiz/" + QUIZ_ORDER[curr_idx + 1]
+            else:
+                next_url = "/results"
+            
+            if curr_idx > 0:
+                prev_url = "/quiz/" + QUIZ_ORDER[curr_idx - 1]
+            else:
+                prev_url = ""
+        except ValueError:
+            next_url = "/results"
+            prev_url = ""
+    else:
+        next_url = content.get("next", "/results")
+        prev_url = content.get("prev", "")
 
     question = {
         "quiz_id": content.get("id", id),
@@ -257,8 +275,8 @@ def quiz(id):
         "media": content.get("media", ""),
         "tip_title": content.get("tip_title", "Choose the best answer"),
         "tip_desc": content.get("tip_desc", "Think about what you've learned so far. You've got this!"),
-        "prev_url": content.get("prev", ""),
-        "next_url": content.get("next", "/results"),
+        "prev_url": prev_url,
+        "next_url": next_url,
     }
     return render_template('quiz.html', question=question)
 
@@ -275,9 +293,10 @@ def record_answer():
     if user_answer == quiz_content[quiz_id]['a']:
         session['current_attempt_score'] += 1
 
-    if quiz_id == "5": 
+    if quiz_id == QUIZ_ORDER[-1]: 
         session['last_final_score'] = session['current_attempt_score']
         session.pop('current_attempt_score', None)
+        session['quiz_mode'] = 'normal'
 
     return jsonify(success=True)
 
@@ -290,8 +309,10 @@ def record():
 
 @app.route('/retake')
 def retake():
+    session['quiz_mode'] = 'retake'
     session['current_attempt_score'] = 0
-    return redirect(url_for('quiz', id='1'))
+    first_quiz = QUIZ_ORDER[0]
+    return redirect(url_for('quiz', id=first_quiz))
 
 @app.route('/results')
 def results():
