@@ -1,6 +1,10 @@
 # UI-final-project
 COMSW4170 USER INTERFACE DESIGN FINAL PROJECT
 
+# Team Members
+- Hanxuan Zhang - Hanxuan1003
+- Jiachen Tu - JIachen-Tu
+- Nuo Chen - lvelf
 
 ## Env
 ```bash
