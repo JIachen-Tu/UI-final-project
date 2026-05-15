@@ -181,7 +181,10 @@ def reset_attempt():
 @app.route('/')
 def home():
     session['quiz_mode'] = 'normal'
+    session['current_attempt_score'] = 0
+    session.pop('attempt_results', None) 
     return render_template('home.html')
+
 
 
 @app.route('/learn/<id>')
@@ -235,6 +238,9 @@ def learn_last_page():
 
 @app.route('/quiz/<id>')
 def quiz(id):
+    if id == QUIZ_ORDER[0]:
+        reset_attempt()
+
     content = quiz_content.get(id)
     if content is None:
         abort(404)
@@ -287,18 +293,30 @@ def record_answer():
     quiz_id = req.get('quiz_id')
     user_answer = req.get('user_answer')
 
-    if 'current_attempt_score' not in session:
-        session['current_attempt_score'] = 0
+    if quiz_id not in quiz_content:
+        return jsonify(success=False, error="Invalid quiz_id"), 400
 
-    if user_answer == quiz_content[quiz_id]['a']:
-        session['current_attempt_score'] += 1
+    if 'attempt_results' not in session:
+        session['attempt_results'] = {}
+
+    attempt_results = session['attempt_results']
+
+    is_correct = (user_answer == quiz_content[quiz_id]['a'])
+
+    attempt_results[quiz_id] = is_correct
+    session['attempt_results'] = attempt_results
+
+    current_score = sum(1 for v in attempt_results.values() if v)
+    session['current_attempt_score'] = current_score
 
     if quiz_id == QUIZ_ORDER[-1]: 
         session['last_final_score'] = session['current_attempt_score']
+        session.pop('attempt_results', None)
         session.pop('current_attempt_score', None)
         session['quiz_mode'] = 'normal'
 
     return jsonify(success=True)
+
 
 
 
@@ -311,8 +329,10 @@ def record():
 def retake():
     session['quiz_mode'] = 'retake'
     session['current_attempt_score'] = 0
+    session.pop('attempt_results', None) 
     first_quiz = QUIZ_ORDER[0]
     return redirect(url_for('quiz', id=first_quiz))
+
 
 @app.route('/results')
 def results():
